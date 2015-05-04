@@ -163,7 +163,7 @@ App.prototype.showError = function()
 App.prototype.nextCloud = function(){
     var that = this;
     this.jsonIndex++;
-    if (this.jsonIndex > mainJSON.length) this.jsonIndex = 0;
+    if (this.jsonIndex >= mainJSON.length) this.jsonIndex = 0;
     $('.slide').removeClass('active');
     $('.slide').eq(this.jsonIndex).addClass('active');
     var json = mainJSON[this.jsonIndex];
