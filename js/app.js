@@ -112,17 +112,17 @@ App.prototype.setLocation = function(json)
                 $div.typed({
                         strings: ["Fetching " + json.country + " trends..."],
                         typeSpeed: 0,
-                        callback: function(){ setTimeout(function(){that.getTrends()},1000) }
+                        callback: function(){ setTimeout(function(){that.getTrends(json)},1000) }
                 });
 
             }
     });
 }
 
-App.prototype.getTrends = function()
+App.prototype.getTrends = function(json)
 {
     var that = this;
-    $.getJSON("http://darwintrend.herokuapp.com/trends.json",function(json){
+    $.getJSON("http://darwintrend.herokuapp.com/trends/"+json.country_code,function(json){
         if (json.error) return that.showError();
         $('.typed-cursor').remove();
         mainJSON = json;
@@ -191,10 +191,19 @@ App.prototype.setup = function()
 };
 
 app = new App();
-app.fetchDatas();
+//Uncomment sampleData.js
+if (true)
+{
+    app.fetchDatas();
+}
+else
+{
+    $('.loader').hide();
+    app.setup();
+}
 
-//$('.loader').hide();
-//app.setup();
+
+
 render();
 
 //clouds.push(new MainTag('BATMAN'));
