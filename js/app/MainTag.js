@@ -41,11 +41,18 @@ MainTag.prototype.spawn = function(){
             });
         }
 
-        t.insert(TweenMax.fromTo(peripheral.container.scale,1,{x:-1},{x:1,repeat:2, yoyo:true,delay:i+1,onComplete:showPlanet}));
+        t.insert(TweenMax.fromTo(peripheral.container.scale,1,{x:-1},{
+            x:1,
+            repeat:2,
+            yoyo:true,
+            delay:i/10+0.3,
+            onComplete:showPlanet,
+            ease: Back.easeOut.config(1.7)
+        }));
     });
     //tl.insert(TweenMax.to(particleSprite.scale,10,{x:4.5,y:4.5,ease:Bounce.easeOut}));
 
-    t.insert(TweenMax.to(this.cloudContainer.scale,9,{x:1,y:1,ease: SlowMo.ease.config(0.7, 0.7, false),delay:1.2}));
+    t.insert(TweenMax.to(this.cloudContainer.scale,3,{x:1,y:1, ease: Back.easeOut.config(1.7),delay:1.2}));
 };
 
 MainTag.prototype.die = function()

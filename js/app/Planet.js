@@ -39,7 +39,7 @@ Planet.prototype.update = function()
    //Random point on circle.
    var angle = this.angle;
 
-   var modifier = 0.01 /(this.peripheralCircle.id * 10);
+   var modifier = 0.06 /(this.peripheralCircle.id * 10);
    //console.log(angle,this.peripheralCircle.id,modifier);
    this.angle+= modifier;
    var point = new PIXI.Point(middle.x+this.peripheralCircle.r*Math.cos(angle),middle.y+this.peripheralCircle.r*Math.sin(angle));

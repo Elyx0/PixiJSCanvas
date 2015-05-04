@@ -45,5 +45,6 @@
 <script src="/app/Planet.js"></script>
 <script src="/app/PeripheralCircle.js"></script>
 <script src="/app/MainTag.js"></script>
+<!-- <script src="/sampleData.js"></script> -->
 <script src="/app.js"></script>
 </body>

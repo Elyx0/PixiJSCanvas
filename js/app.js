@@ -170,7 +170,7 @@ App.prototype.nextCloud = function(){
         that.clouds = [new MainTag(json.tag.toUpperCase(),json.apiKeywords)];
         setTimeout(function(){
             that.tweenTimer.restart();
-        },9000);
+        },4000);
     });
 }
 
@@ -183,7 +183,7 @@ App.prototype.setup = function()
     TweenLite.to($('.loader')[0],0.5,{opacity:0,onComplete:function(){
         var json = mainJSON[that.jsonIndex];
         that.clouds.push(new MainTag(json.tag.toUpperCase(),json.apiKeywords));
-        barTween = TweenLite.to($('.bottomBar')[0],25,{width:cw + 'px',onComplete:function(){
+        barTween = TweenLite.to($('.bottomBar')[0],10,{width:cw + 'px',onComplete:function(){
             that.nextCloud();
             that.tweenTimer = barTween;
         },delay:10});
@@ -192,6 +192,9 @@ App.prototype.setup = function()
 
 app = new App();
 app.fetchDatas();
+
+//$('.loader').hide();
+//app.setup();
 render();
 
 //clouds.push(new MainTag('BATMAN'));
