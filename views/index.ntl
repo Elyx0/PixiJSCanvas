@@ -1,0 +1,49 @@
+<html>
+<head>
+<link rel="stylesheet" href="/style.min.css">
+<link href='https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<div class="bodywrapper">
+    <div class="infoWrapper hidden">
+    </div>
+    <div class="canvasWrapper">
+    </div>
+    <div class="loader">
+        <div class="anim">
+
+            <div class="container">
+              <div class="wrap">
+                <div class="circle lateral c1">
+                  <div class="wrap-electron">
+                    <div class="circle electron"></div>
+                  </div>
+                </div>
+                <div class="circle center"></div>
+              </div>
+            </div>
+
+        </div>
+        <div class="datas d1"></div>
+        <div class="datas d2"></div>
+        <div class="datas d3"></div>
+    </div>
+    <div class="bottomBar">
+
+    </div>
+</div>
+<script>var ip = "#ip#";</script>
+<script src="/lib/jquery-2.1.3.min.js"></script>
+<script src="/lib/three.min.js"></script>
+<script src="/lib/pixi.js"></script>
+<!-- <script src="/lib/pixi2.js"></script> -->
+<script src="/lib/stats.min.js"></script>
+<script src="/lib/gsap/TweenMax.min.js"></script>
+<script src="/lib/typed.js"></script>
+<script src="/utils.js"></script>
+<script src="/app/Planet.js"></script>
+<script src="/app/PeripheralCircle.js"></script>
+<script src="/app/MainTag.js"></script>
+<script src="/app.js"></script>
+</body>
