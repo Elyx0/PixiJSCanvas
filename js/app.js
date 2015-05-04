@@ -164,13 +164,16 @@ App.prototype.nextCloud = function(){
     var that = this;
     this.jsonIndex++;
     if (this.jsonIndex > mainJSON.length) this.jsonIndex = 0;
+    $('.slide').removeClass('active');
+    $('.slide').eq(this.jsonIndex).addClass('active');
     var json = mainJSON[this.jsonIndex];
     var currentTag = this.clouds[this.current];
     currentTag.die().then(function(){
         that.clouds = [new MainTag(json.tag.toUpperCase(),json.apiKeywords)];
         setTimeout(function(){
-            that.tweenTimer.restart();
-        },4000);
+            //that.tweenTimer.restart();
+            that.nextCloud();
+        },10000);
     });
 }
 
@@ -179,14 +182,27 @@ App.prototype.setup = function()
     this.current = 0;
     this.jsonIndex = 0;
     var that = this;
+    var $bw = $('.bottomWrapper');
+    for (var i = 0;i < mainJSON.length;i++)
+    {
+        var $slide = $('.slide').first().clone();
+        $bw.append($slide);
+    }
+    $('.slide').first().addClass('active');
 
     TweenLite.to($('.loader')[0],0.5,{opacity:0,onComplete:function(){
         var json = mainJSON[that.jsonIndex];
+
+        $bw.removeClass('hidden');
+
         that.clouds.push(new MainTag(json.tag.toUpperCase(),json.apiKeywords));
-        barTween = TweenLite.to($('.bottomBar')[0],10,{width:cw + 'px',onComplete:function(){
+        setTimeout(function(){
             that.nextCloud();
-            that.tweenTimer = barTween;
-        },delay:10});
+        },10000);
+        // barTween = TweenLite.to($('.bottomBar')[0],10,{width:cw + 'px',onComplete:function(){
+        //     that.nextCloud();
+        //     that.tweenTimer = barTween;
+        // },delay:10});
     }});
 };
 

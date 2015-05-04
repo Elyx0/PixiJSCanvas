@@ -17,6 +17,63 @@ body {
   width: 0px;
   background: white; }
 
+.bottomSlides {
+  position: absolute;
+  bottom: 0;
+  height: 40px;
+  width: 100%;
+  margin: auto;
+  text-align: center; }
+  .bottomSlides .slide + .slide {
+    margin-left: 40px; }
+  .bottomSlides .bottomWrapper {
+    position: relative;
+    -webkit-transition: all 1s ease-in;
+            transition: all 1s ease-in;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+    bottom: 0;
+    height: 40px; }
+    .bottomSlides .bottomWrapper.hidden {
+      bottom: -40px; }
+  .bottomSlides .slide {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    -webkit-transition: all 1s ease-in;
+            transition: all 1s ease-in; }
+    .bottomSlides .slide .point {
+      background: rgba(255, 255, 255, 0.4);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      position: absolute;
+      top: 20px;
+      left: 15px;
+      -webkit-transition: all 1s ease-in;
+              transition: all 1s ease-in; }
+      .bottomSlides .slide .point:before {
+        content: '';
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        border-radius: 50%;
+        display: block;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        top: -6px;
+        -webkit-transition: all 1s ease-in;
+                transition: all 1s ease-in;
+        opacity: 0;
+        left: -6px; }
+    .bottomSlides .slide.active {
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3); }
+      .bottomSlides .slide.active .point {
+        background: white;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+        .bottomSlides .slide.active .point:before {
+          opacity: 1; }
+
 .loader {
   width: 100%;
   height: 400px;

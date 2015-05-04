@@ -20,6 +20,75 @@ body {
     background: white;
 }
 
+.bottomSlides
+{
+    position: absolute;
+    bottom:0;
+    height:40px;
+    width:100%;
+    margin:auto;
+    text-align: center;
+    .slide + .slide {
+        margin-left: 40px;
+    }
+    .bottomWrapper
+    {
+        position:relative;
+        transition: all 1s ease-in;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        overflow: hidden;
+        bottom: 0;
+        height: 40px;
+        &.hidden
+        {
+            bottom:-40px;
+        }
+    }
+    .slide
+    {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        position: relative;
+        transition: all 1s ease-in;
+        .point
+        {
+            background: rgba(255,255,255,0.4);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: absolute;
+              top: 20px;
+            left: 15px;
+            transition: all 1s ease-in;
+            &:before {
+                content: '';
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                border-radius: 50%;
+                display: block;
+                border: 1px solid rgba(255,255,255,0.3);
+                top: -6px;
+                transition: all 1s ease-in;
+                opacity: 0;
+                left: -6px;
+            }
+        }
+    &.active
+    {
+        border-bottom: 2px solid rgba(255,255,255,0.3);
+        .point {
+            background: white;
+            box-shadow: 0 0 20px rgba(255,255,255,.8);
+            &:before {
+                opacity: 1;
+            }
+        }
+    }
+    }
+}
+
 .loader
 {
     width: 100%;

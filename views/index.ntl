@@ -32,6 +32,13 @@
     <div class="bottomBar">
 
     </div>
+    <div class="bottomSlides">
+      <div class="bottomWrapper hidden">
+        <div class="slide">
+            <div class="point"></div>
+        </div>
+      </div>
+    </div>
 </div>
 <script>var ip = "#ip#";</script>
 <script src="/lib/jquery-2.1.3.min.js"></script>
