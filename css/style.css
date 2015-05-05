@@ -26,10 +26,8 @@ body {
   color: #fff;
   font-family: Lato; }
   .topbar b {
-    color: #fd8609;
     font-size: 12px;
-    opacity: 1;
-    border-bottom: 1px solid #fd8609; }
+    opacity: 1; }
 
 #stats {
   opacity: 0 !important; }
