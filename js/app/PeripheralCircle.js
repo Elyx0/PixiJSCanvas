@@ -12,7 +12,7 @@ function PeripheralCircle(options,TagInstance)
     var r = ~~(TagInstance.mainCircle.getBounds().width / 2); //Mult scale ? base r
     var circle = new PIXI.Graphics();
 
-    var distance = nbCircle == 1 ? r + 15 : ~~(r + 15  + ((nbCircle-1) * Math.min(cw,ch)/12));
+    var distance = nbCircle == 1 ? r + 15 : ~~(r + 15  + ((nbCircle-1) * Math.min(cw,ch)/14));
     this.r = distance;
     console.log(distance);
     circle.lineStyle(1,0xFFFFFF);
