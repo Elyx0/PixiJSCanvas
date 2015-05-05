@@ -21,10 +21,15 @@ body {
   position: absolute;
   top: 90px;
   left: 10px;
-  font-size: 10px;
-  opacity: .7;
+  font-size: 11px;
+  opacity: 1;
   color: #fff;
   font-family: Lato; }
+  .topbar b {
+    color: #fd8609;
+    font-size: 12px;
+    opacity: 1;
+    border-bottom: 1px solid #fd8609; }
 
 #stats {
   opacity: 0 !important; }
