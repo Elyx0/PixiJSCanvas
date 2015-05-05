@@ -70,7 +70,7 @@ MainTag.prototype.die = function()
 
 MainTag.prototype.buildText = function()
 {
-    var max = ~~(Math.min(cw,ch)/8);
+    var max = ~~(Math.min(cw,ch)/7);
     var current = max;
     console.log(max);
     var text;

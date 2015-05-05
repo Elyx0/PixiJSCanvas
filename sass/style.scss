@@ -20,6 +20,35 @@ body {
     background: white;
 }
 
+.topbar
+{
+    position: absolute;
+    top: 70px;
+    left: 10px;
+    font-size: 10px;
+    opacity: .5;
+    color: #fff;
+    font-family: Lato;
+}
+
+#stats
+{
+    opacity: 0 !important;
+}
+
+#logo
+{
+    background-image: url(./DARWIN_HEADER_WEB2.png);
+    width: 180px;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    height: 210px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 .bottomSlides
 {
     position: absolute;

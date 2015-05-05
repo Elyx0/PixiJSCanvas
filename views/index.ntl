@@ -33,6 +33,10 @@
     <div class="bottomBar">
 
     </div>
+    <div id="logo"></div>
+    <div class="topbar">
+      Powered by <b>IBM</b> big data and cognitive technologies
+    </div>
     <div class="bottomSlides">
       <div class="bottomWrapper hidden">
         <div class="slide">

@@ -69,6 +69,8 @@ App.prototype.resize = function()
 
 App.prototype.fetchDatas = function()
 {
+    TweenLite.to($('.loader')[0],0.5,{opacity:1});
+    $('.datas').empty();
     var $datas = $('.d1');
     var that = this;
     var $div = $('<div>').addClass('sub-data');
@@ -195,7 +197,20 @@ App.prototype.showError = function()
 App.prototype.nextCloud = function(){
     var that = this;
     this.jsonIndex++;
-    if (this.jsonIndex >= mainJSON.length) this.jsonIndex = 0;
+    if (this.jsonIndex >= mainJSON.length) {
+        this.jsonIndex = 0;
+        $('.slide').removeClass('active');
+            var currentTag = this.clouds[this.current];
+            currentTag.die().then(function(){
+                 document.location.reload();
+            //    setTimeout(function(){
+            //     container.removeChildren(0,20);
+            //     that.fetchDatas();
+            // },2000);
+            });
+        return;
+
+    }
     $('.slide').removeClass('active');
     $('.slide').eq(this.jsonIndex).addClass('active');
     var json = mainJSON[this.jsonIndex];
@@ -222,7 +237,7 @@ App.prototype.setup = function()
     }
     $('.slide').first().addClass('active');
 
-    TweenLite.to($('.loader')[0],0.5,{opacity:0,onComplete:function(){
+    this.loader = TweenLite.to($('.loader')[0],0.5,{opacity:0,onComplete:function(){
         var json = mainJSON[that.jsonIndex];
 
         $bw.removeClass('hidden');
