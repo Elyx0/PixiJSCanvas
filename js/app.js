@@ -76,7 +76,7 @@ App.prototype.fetchDatas = function()
     var $divLoc = $('<div>').addClass('sub-data location');
     $datas.append($divLoc);
     $div.typed({
-            strings: ["Detecting location..."],
+            strings: ["Streaming trends from..."],
             typeSpeed: 0,
             callback: function(){ setTimeout(function(){that.getLocation()},1000) }
     });
@@ -110,7 +110,7 @@ App.prototype.setLocation = function(json)
                 var $divLoc = $('<div>').addClass('sub-data location');
                 $datas.append($divLoc);
                 $div.typed({
-                        strings: ["Fetching " + json.country + " trends..."],
+                        strings: ["Analyzing human expressions..."],
                         typeSpeed: 0,
                         callback: function(){ setTimeout(function(){that.getTrends(json)},1000) }
                 });
@@ -132,12 +132,44 @@ App.prototype.getTrends = function(json)
             typeSpeed: 0,
             callback: function(){
                 setTimeout(function(){
-                    that.setup(json);
-                },1000);
+                    that.correlatePattern();
+                },1500);
             }
         });
     }).error(function(){
         that.showError();
+    });
+};
+
+App.prototype.correlatePattern = function()
+{
+    var that = this;
+    $('.typed-cursor').remove();
+    var $datas = $('.d3');
+    var $div = $('<div>').addClass('sub-data');
+    $datas.append($div);
+    var $divLoc = $('<div>').addClass('sub-data location');
+    $datas.append($divLoc);
+    $div.typed({
+            strings: ["Correlating the patterns... ^2000 DONE <b>✓</b>"],
+            typeSpeed: 0,
+            callback: function(){ setTimeout(function(){
+                $('.typed-cursor').remove();
+                var $datas = $('.d4');
+                var $div = $('<div>').addClass('sub-data');
+                $datas.append($div);
+                var $divLoc = $('<div>').addClass('sub-data location');
+                $datas.append($divLoc);
+                $div.typed({
+                    strings: ["Delivering awareness... ^3000"],
+                    typeSpeed: 0,
+                    callback: function(){
+                        setTimeout(function(){
+                            that.setup();
+                        },1000);
+                    }
+                });
+            },500) }
     });
 };
 

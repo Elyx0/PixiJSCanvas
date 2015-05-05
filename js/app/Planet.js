@@ -54,7 +54,7 @@ Planet.prototype.update = function()
 Planet.prototype.createText = function(word,circle)
 {
     var px = this.peripheralCircle.tagInstance.text._style.font.split("px")[0] * 0.7;
-    if (px < 12) px = 12;
+    if (px < 15) px = 15;
     var text = new PIXI.Text(word, {font:"" + px + "px Lato", fill:"white"});
     text.resolution = window.devicePixelRatio;
     text.position.x = circle.position.x;// - text.getBounds().width/2;
