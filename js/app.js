@@ -289,6 +289,10 @@ function render() {
 }
 
 
+$(window).on('resize',function(){
+    document.location.reload();
+});
+
 
 // App.prototype.createGradient = function(){
 //     bgContainer = new PIXI.Container();
