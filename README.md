@@ -8,37 +8,37 @@ Sample Query url: http://darwintrend.herokuapp.com/trends.json which auto geoloc
 
 A single trend item would look like:
 
-    ```json
-    {
-    _id: "5551cec2b61f8703000eb808",
-    tag: "Lio",
-    country: 16,
-    created_at: "2015-05-12T09:58:26.843Z",
-    apiKeywords: [
-    {
-    term: "carlo",
-    weight: 100
-    },
-    {
-    term: "cocodrills",
-    weight: 8
-    },
-    {
-    term: "free",
-    weight: 8
-    },
-    {
-    term: "noir",
-    weight: 7
-    },
-    {
-    term: "special",
-    weight: 7
-    }
-    ],
-    __v: 0
-    }
-    ```
+```javascript
+{
+_id: "5551cec2b61f8703000eb808",
+tag: "Lio",
+country: 16,
+created_at: "2015-05-12T09:58:26.843Z",
+apiKeywords: [
+{
+term: "carlo",
+weight: 100
+},
+{
+term: "cocodrills",
+weight: 8
+},
+{
+term: "free",
+weight: 8
+},
+{
+term: "noir",
+weight: 7
+},
+{
+term: "special",
+weight: 7
+}
+],
+__v: 0
+}
+```
 
 The country code mapping can be found at : https://github.com/felginep/hawttrends/blob/master/HawtTrends/Controller/HTTermsDownloader.m
 
