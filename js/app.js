@@ -1,72 +1,59 @@
-
+//Stats block FPS counter - Hidden in css.
 var stats = new Stats();
 stats.setMode(0); // 0: fps, 1: ms
-
 // align top-left
 stats.domElement.style.position = 'absolute';
 stats.domElement.style.left = '0px';
 stats.domElement.style.top = '0px';
-
 document.body.appendChild( stats.domElement );
 
 
 
-
+// Global vars
 var wrapper = document.getElementsByClassName('canvasWrapper')[0];
 
-var container,renderer,bgContainer;
+var container,renderer,bgContainer, particleTexture,cw,ch,middle,App,app;
 
-var cw,ch,middle,App,app;
+// Config colors
 var config = {
     mainCircleNormal: rgbToHex(255,255,255),
     mainCircleHover: rgbToHex(255,255,255)
 }
 
-// //Heating cache
-//  $.getJSON("http://darwintrend.herokuapp.com/trends.json");
-
 function App()
 {
   this.clouds = [];
   this.resize();
-  //renderer = new PIXI.CanvasRenderer(cw, ch,{resolution: 2});
-  //renderer = PIXI.autoDetectRenderer(cw,ch,null,true,true);
-  //renderer = PIXI.autoDetectRenderer(cw,ch); //
 
-  //this.createGradient();
+  // Particle texture for planets
   particleTexture = new PIXI.Texture.fromImage('particle_sprite.png');
-
-  //barTween = TweenLite.to($('.bottomBar')[0],25,{width:cw + 'px',onComplete:nextCloud,delay:10});
 }
 
 App.prototype.resize = function()
 {
-      if (wrapper.children.length) wrapper.children[0].remove();
-      cw  = document.body.clientWidth;
-      ch  = document.body.clientHeight;
-      middle = {x: cw/2,y:ch/2};
-      container = new PIXI.Container();
-      container.pivot.set(middle.x,middle.y);
-      container.position.set(middle.x,middle.y);
+  if (wrapper.children.length) wrapper.children[0].remove();
+  cw  = document.body.clientWidth;
+  ch  = document.body.clientHeight;
+  middle = {x: cw/2,y:ch/2};
+  container = new PIXI.Container();
+  container.pivot.set(middle.x,middle.y);
+  container.position.set(middle.x,middle.y);
 
-      var canvas =  window.document.createElement("canvas");
-      canvas.style.width = cw;
-      canvas.style.height = ch;
-      wrapper.appendChild(canvas);
+  var canvas =  window.document.createElement("canvas");
+  canvas.style.width = cw;
+  canvas.style.height = ch;
+  wrapper.appendChild(canvas);
 
-      // renderer = new PIXI.CanvasRenderer(cw, ch,{
-      //   view: canvas,
-      //   resolution: window.devicePixelRatio
-      // });
-
-    renderer = new PIXI.WebGLRenderer(cw, ch,{
-        view: canvas,
-        antialiasing:true,
-        resolution: window.devicePixelRatio,
-        transparent: true
-      });
+  // Init pixi renderer, with double resolution for retinas.
+  renderer = new PIXI.WebGLRenderer(cw, ch,{
+    view: canvas,
+    antialiasing:true,
+    resolution: window.devicePixelRatio,
+    transparent: true
+});
 }
 
+// Initialize loader
 App.prototype.fetchDatas = function()
 {
     TweenLite.to($('.loader')[0],0.5,{opacity:1});
@@ -78,49 +65,52 @@ App.prototype.fetchDatas = function()
     var $divLoc = $('<div>').addClass('sub-data location');
     $datas.append($divLoc);
     $div.typed({
-            strings: ["Streaming trends from..."],
-            typeSpeed: 0,
-            callback: function(){ setTimeout(function(){that.getLocation()},1000) }
+        strings: ["Streaming trends from..."],
+        typeSpeed: 0,
+        callback: function(){ setTimeout(function(){that.getLocation()},1000) }
     });
 
 };
 
+// Fetches geolocation from telize
 App.prototype.getLocation = function(){
     var that = this;
     $('.typed-cursor').remove();
     $.getJSON("http://www.telize.com/geoip?callback=?",
-            function(json) {
+              function(json) {
                 console.log(json);
                 that.setLocation(json);
             }
-        ).error(function(){
-            that.setLocation({country:'Default',country_code:'US'});
-        });
-};
+            ).error(function(){
+                that.setLocation({country:'Default',country_code:'US'});
+            });
+        };
 
+// Outputs location text using typed.js
 App.prototype.setLocation = function(json)
 {
     var that = this;
     $('.location').typed({
-            strings: [json.country + " <b>✓</b>"],
-            typeSpeed: 0,
-            callback: function(){
-                $('.typed-cursor').remove();
-                var $datas = $('.d2');
-                var $div = $('<div>').addClass('sub-data');
-                $datas.append($div);
-                var $divLoc = $('<div>').addClass('sub-data location');
-                $datas.append($divLoc);
-                $div.typed({
-                        strings: ["Analyzing human expressions..."],
-                        typeSpeed: 0,
-                        callback: function(){ setTimeout(function(){that.getTrends(json)},1000) }
-                });
+        strings: [json.country + " <b>✓</b>"],
+        typeSpeed: 0,
+        callback: function(){
+            $('.typed-cursor').remove();
+            var $datas = $('.d2');
+            var $div = $('<div>').addClass('sub-data');
+            $datas.append($div);
+            var $divLoc = $('<div>').addClass('sub-data location');
+            $datas.append($divLoc);
+            $div.typed({
+                strings: ["Analyzing human expressions..."],
+                typeSpeed: 0,
+                callback: function(){ setTimeout(function(){that.getTrends(json)},1000) }
+            });
 
-            }
+        }
     });
 }
 
+// Fetches mainJSON then Outputs text info using typed.js
 App.prototype.getTrends = function(json)
 {
     var that = this;
@@ -143,6 +133,7 @@ App.prototype.getTrends = function(json)
     });
 };
 
+// Outputs text info using typed.js
 App.prototype.correlatePattern = function()
 {
     var that = this;
@@ -153,30 +144,33 @@ App.prototype.correlatePattern = function()
     var $divLoc = $('<div>').addClass('sub-data location');
     $datas.append($divLoc);
     $div.typed({
-            strings: ["Correlating the patterns... ^2000 DONE <b>✓</b>"],
-            typeSpeed: 0,
-            callback: function(){ setTimeout(function(){
-                $('.typed-cursor').remove();
-                var $datas = $('.d4');
-                var $div = $('<div>').addClass('sub-data');
-                $datas.append($div);
-                var $divLoc = $('<div>').addClass('sub-data location');
-                $datas.append($divLoc);
-                $div.typed({
-                    strings: ["Delivering awareness... ^3000"],
-                    typeSpeed: 0,
-                    callback: function(){
-                        setTimeout(function(){
-                            that.setup();
-                        },1000);
-                    }
-                });
-            },500) }
+        strings: ["Correlating the patterns... ^2000 DONE <b>✓</b>"],
+        typeSpeed: 0,
+        callback: function(){ setTimeout(function(){
+            $('.typed-cursor').remove();
+            var $datas = $('.d4');
+            var $div = $('<div>').addClass('sub-data');
+            $datas.append($div);
+            var $divLoc = $('<div>').addClass('sub-data location');
+            $datas.append($divLoc);
+            $div.typed({
+                strings: ["Delivering awareness... ^3000"],
+                typeSpeed: 0,
+                callback: function(){
+                    setTimeout(function(){
+                        that.setup();
+                    },1000);
+                }
+            });
+        },500) }
     });
 };
 
-App.prototype.showError = function()
-{
+/**
+ * Displays error from geoloc / trends fetching
+ */
+ App.prototype.showError = function()
+ {
     $('.datas').empty();
     $('.d1').typed({
         strings: ["ERROR FETCHING TRENDS <i> ✖ </i>"],
@@ -194,20 +188,20 @@ App.prototype.showError = function()
     });
 };
 
-App.prototype.nextCloud = function(){
+/**
+ * Calls die on current cloud tag, (MainTag.prototype.die) and inits the next one.
+ */
+ App.prototype.nextCloud = function(){
     var that = this;
     this.jsonIndex++;
     if (this.jsonIndex >= mainJSON.length) {
         this.jsonIndex = 0;
         $('.slide').removeClass('active');
-            var currentTag = this.clouds[this.current];
-            currentTag.die().then(function(){
+        var currentTag = this.clouds[this.current];
+        currentTag.die().then(function(){
+                 //Reload app to fetch potentially new data
                  document.location.reload();
-            //    setTimeout(function(){
-            //     container.removeChildren(0,20);
-            //     that.fetchDatas();
-            // },2000);
-            });
+             });
         return;
 
     }
@@ -224,8 +218,12 @@ App.prototype.nextCloud = function(){
     });
 }
 
-App.prototype.setup = function()
-{
+
+/**
+ * Setup slides at bottom, then launch first word cloud
+ */
+ App.prototype.setup = function()
+ {
     this.current = 0;
     this.jsonIndex = 0;
     var that = this;
@@ -236,44 +234,29 @@ App.prototype.setup = function()
         $bw.append($slide);
     }
     $('.slide').first().addClass('active');
-
     this.loader = TweenLite.to($('.loader')[0],0.5,{opacity:0,onComplete:function(){
         var json = mainJSON[that.jsonIndex];
-
         $bw.removeClass('hidden');
-
         that.clouds.push(new MainTag(json.tag.toUpperCase(),json.apiKeywords));
         setTimeout(function(){
             that.nextCloud();
         },10000);
-        // barTween = TweenLite.to($('.bottomBar')[0],10,{width:cw + 'px',onComplete:function(){
-        //     that.nextCloud();
-        //     that.tweenTimer = barTween;
-        // },delay:10});
     }});
 };
 
+
+//Setting up new app
 app = new App();
-//Uncomment sampleData.js
-if (true)
-{
-    app.fetchDatas();
-}
-else
-{
-    $('.loader').hide();
-    app.setup();
-}
 
+//Fetching datas
+app.fetchDatas();
 
-
+//Render loop
 render();
 
-//clouds.push(new MainTag('BATMAN'));
-
 function render() {
-    requestAnimationFrame( render );
-
+    requestAnimationFrame(render);
+    //Update each planet position around its circle axis
     app.clouds.forEach(function(cloud){
         cloud.peripheralArray.forEach(function(peripheral){
             peripheral.planets.forEach(function(planet){
@@ -282,6 +265,7 @@ function render() {
         });
     });
 
+    //Render pixi container
     renderer.render(container);
 
     // update stats
@@ -289,56 +273,9 @@ function render() {
 }
 
 
+//Reload app on resize
 $(window).on('resize',function(){
     document.location.reload();
 });
 
-
-// App.prototype.createGradient = function(){
-//     bgContainer = new PIXI.Container();
-//     var canvasElem = document.createElement("canvas");
-//     var ctx = canvasElem.getContext("2d");
-
-//     // I fix the width/height, but you can also compute it from the input string
-//     canvasElem.width  = cw;
-//     canvasElem.height = ch;
-
-//     // e.g. "20pt Arial"
-//     ctx.font = "20px Arial";
-
-//     // default values
-//     ctx.fillStyle = "white";
-//     ctx.strokeStyle = "white";
-//     ctx.lineWidth = 0;
-
-//     // pixi default, although usual default is "alphabetic"
-//     ctx.textBaseline = "top";
-
-//     // pixi default, although usual is "start"
-//     ctx.textAlign = "left";
-
-//     // draw the text
-//     // the coordinates specify where to start drawing from
-//     ctx.fillText("your text here",0,0);
-
-//     // optionally, draw text outline too
-//     // by default pixi doesn't do this
-//     ctx.strokeText("your text here",0,0);
-
-//     var grd=ctx.createLinearGradient(cw/2,0,cw/2,ch);
-//     // grd.addColorStop(0,"rgb(32, 27, 69)");
-//     // grd.addColorStop(1,"rgb(32, 29, 58)");
-
-//     grd.addColorStop(0,"#d2d2d3");
-//     grd.addColorStop(1,"#ffffff");
-
-//     ctx.fillStyle=grd;
-//     ctx.fillRect(0,0,cw,ch);
-
-//     var texture = PIXI.Texture.fromCanvas(canvasElem);
-//     gradient  = new PIXI.Sprite(texture);
-//     gradient.alpha = 0.5;
-//     container.addChild(bgContainer);
-//     bgContainer.addChild(gradient);
-// }
 

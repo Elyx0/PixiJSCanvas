@@ -1,3 +1,8 @@
+/**
+ * MainTag from a cloud word.
+ * @param String word  Center cloud word
+ * @param Array terms Terms correlated with the word
+ */
 function MainTag(word,terms)
 {
     this.cloudContainer = new PIXI.Container();
@@ -21,15 +26,17 @@ function MainTag(word,terms)
     this.cloudContainer.alpha = 0;
     this.spawn();
 }
+
+/**
+ * Spawn cloud animation using TweenMax.
+ * Rotates each circles and zoom + opacity to 1
+ */
 MainTag.prototype.spawn = function(){
     this.cloudContainer.scale.set(0);
     this.cloudContainer.alpha = 1;
     var t = this.t = new TimelineMax();
 
     this.peripheralArray.forEach(function(peripheral,i){
-        console.log(i);
-
-
         peripheral.planets.forEach(function(planet){
             planet.container.alpha = 0;
         });
@@ -50,11 +57,12 @@ MainTag.prototype.spawn = function(){
             ease: Back.easeOut.config(1.7)
         }));
     });
-    //tl.insert(TweenMax.to(particleSprite.scale,10,{x:4.5,y:4.5,ease:Bounce.easeOut}));
-
     t.insert(TweenMax.to(this.cloudContainer.scale,3,{x:1,y:1, ease: Back.easeOut.config(1.7),delay:1.2}));
 };
 
+/**
+ * Kills current cloud and removes it from PIXI main container
+ */
 MainTag.prototype.die = function()
 {
     var deferred = $.Deferred();
@@ -67,28 +75,34 @@ MainTag.prototype.die = function()
     return deferred.promise();
 };
 
-
+/**
+ * Builds center text with max size set up
+ */
 MainTag.prototype.buildText = function()
 {
     var max = ~~(Math.min(cw,ch)/4);
     var current = max;
     console.log(max);
     var text;
+    // Calculate max size by looping until it fits
     do { current--;  text = new PIXI.Text(this.word, {font:current + "px Lato", fill:"#2b2b36"}); }
     while (current > 0 && text.getBounds().width > max);
 
+    // Double the text size
     var mult = current*2;
     text = new PIXI.Text(this.word, {font:"" + mult + "px Lato", fill:"#2b2b36"});
-    // text.resolution = window.devicePixelRatio;
-    // text.updateText();
-    text.resolution = window.devicePixelRatio;
-    text.position.x = middle.x;// - text.getBounds().width/2;
-    text.position.y = middle.y;// - text.getBounds().height/2;
+    text.resolution = window.devicePixelRatio; // Sets resolution for retina
+    //Adjusts position, anchor and scale.
+    text.position.x = middle.x;
+    text.position.y = middle.y;
     text.anchor.set(0.5);
     text.scale.set(0.5);
     this.text = text;
 };
 
+/**
+ * Creates big white circle around the text, and positions the glowing particle under
+ */
 MainTag.prototype.buildMainCircle = function()
 {
     var particleSprite = new PIXI.Sprite(particleTexture);
@@ -114,9 +128,6 @@ MainTag.prototype.buildMainCircle = function()
     mainCircle.drawCircle(middle.x, middle.y, r);
     mainCircle.endFill();
 
-    // mainCircle.position.set(middle.x,middle.y);
-    // mainCircle.pivot.set(middle.x,middle.y);
-
     mainCircle.interactive = true;
     mainCircle.buttonMode = true;
     mainCircle.tint = 0xFFFFFF;
@@ -131,26 +142,23 @@ MainTag.prototype.buildMainCircle = function()
     spriteCircle.position.set(middle.x,middle.y);
 
     this.addToDraw(spriteCircle);
-
-    //Maybe Separate in bindhover
-    mainCircle.mouseover = function(mousedata)
-    {
-        mainCircle.tint = config.mainCircleHover;
-        console.log('MouseOver');
-    }
-    mainCircle.mouseout = function(mousedata)
-    {
-        mainCircle.tint = config.mainCircleNormal;
-        console.log('Mouseout');
-    }
 };
 
+/**
+ * Builds one peripheral circle for current cloud
+ * @param Object options Options for the current peripheral circle (mini planets / mainPlanet)
+ */
 MainTag.prototype.buildPeripheralCircle = function(options)
 {
     var peripheral = new PeripheralCircle(options,this);
     this.peripheralArray.push(peripheral);
 
 };
+
+/**
+ * Adds to the main cloud rendering container
+ * @param Object element Pixi Drawable element
+ */
 MainTag.prototype.addToDraw = function(element){
     this.cloudContainer.addChild(element);
 };

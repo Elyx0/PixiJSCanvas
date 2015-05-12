@@ -1,9 +1,11 @@
 var express = require('express');
 var app = express();
+// Setup static folders
 app.use(express.static('public'));
 app.use(express.static('js'));
 app.use(express.static('assets'));
 
+// Quick templating engine, replacing #ip# with user ip for detection.
 
 var fs = require('fs'); // this engine requires the fs module
 app.engine('ntl', function (filePath, options, callback) { // define the template engine
@@ -12,11 +14,13 @@ app.engine('ntl', function (filePath, options, callback) { // define the templat
     // this is an extremely simple template engine
     var rendered = content.toString().replace('#ip#',options.ip);
     return callback(null, rendered);
-})
+    })
 });
+
 app.set('views', './views'); // specify the views directory
 app.set('view engine', 'ntl');
 
+//Simply get it on / and render tempate index
 app.get('/', function (req, res) {
     var ip = req.headers['x-forwarded-for'] ||
     req.connection.remoteAddress ||

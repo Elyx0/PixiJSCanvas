@@ -1,6 +1,12 @@
+/**
+ * Builds a peripheral circle around a MainTag
+ * @param Object options
+ * @param MainTag TagInstance MainTag instance
+ */
 function PeripheralCircle(options,TagInstance)
 {
     this.options = options;
+    // New container for the peripheral circle assets (miniplanets + circle + texts)
     this.container = new PIXI.Container();
     this.container.position.x = this.container.pivot.x = middle.x;
     this.container.position.y = this.container.pivot.y = middle.y;
@@ -9,7 +15,8 @@ function PeripheralCircle(options,TagInstance)
     this.tagInstance = TagInstance;
     var nbCircle = TagInstance.peripheralArray.length + 1;
     this.id = nbCircle;
-    var r = ~~(TagInstance.mainCircle.getBounds().width / 2); //Mult scale ? base r
+    // Radius is wider for subsequent peripheral circles so they do not overlap
+    var r = ~~(TagInstance.mainCircle.getBounds().width / 2);
     var circle = new PIXI.Graphics();
 
     var distance = nbCircle == 1 ? r + 15 : ~~(r + 15  + ((nbCircle-1) * Math.min(cw,ch)/14));
@@ -39,8 +46,7 @@ function PeripheralCircle(options,TagInstance)
         });
     }
     return this;
-    // Question parents !
-};
+}
 
 
 PeripheralCircle.prototype.update = function()
@@ -53,6 +59,10 @@ PeripheralCircle.prototype.addToDraw = function(obj)
     this.container.addChild(obj);
 }
 
+/**
+ * Creates a new Planet on the Peripheral circle and add it to the planets array
+ * @param  Object planet
+ */
 PeripheralCircle.prototype.createPlanet = function(planet)
 {
     var planetObj = new Planet(planet,this);

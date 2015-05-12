@@ -1,3 +1,11 @@
+/**
+ * Planet orbiting around a peripheral circle
+ *
+ *  It can build miniplanets (Small dots) and named planets with text depending on options
+ *
+ * @param Object options
+ * @param PeripheralCircle peripheralCircle
+ */
 function Planet(options,peripheralCircle)
 {
     this.miniPlanets = [];
@@ -17,16 +25,19 @@ function Planet(options,peripheralCircle)
     }
     if (options.name)
     {
+        //We have a name, build sprite, arc, circle, and text
         var miniPlanetSprite = this.createSprite(0.3,1);
         var miniPlanetArc = this.createArc(miniPlanetSprite);
         var miniPlanetCircle = this.createCircle(miniPlanetSprite);
         var miniPlanetText = this.createText(options.name,miniPlanetArc);
         this.mainPlanet = {sprite:miniPlanetSprite,circle: miniPlanetCircle,arc:miniPlanetArc,text:miniPlanetText};
+        //Add all to the container in the correct order
         this.container.addChild(miniPlanetSprite);
         this.container.addChild(miniPlanetCircle);
         this.container.addChild(miniPlanetArc);
         this.container.addChild(miniPlanetText);
 
+        //Setup bindings on hover
         this.addBinds(miniPlanetArc);
         this.addBinds(miniPlanetText);
 
@@ -34,6 +45,9 @@ function Planet(options,peripheralCircle)
     }
 }
 
+/**
+ * Updates planet position around the Peripheral circle x:cos(angle) y sin(angle)
+ */
 Planet.prototype.update = function()
 {
    //Random point on circle.
@@ -51,6 +65,9 @@ Planet.prototype.update = function()
 
 }
 
+/**
+ * Creates text above planet circle
+ */
 Planet.prototype.createText = function(word,circle)
 {
     var px = this.peripheralCircle.tagInstance.text._style.font.split("px")[0] * 0.8;
@@ -64,10 +81,18 @@ Planet.prototype.createText = function(word,circle)
     return text;
 };
 
+/**
+ * Adds to peripheral container for drawing
+ * @param Object obj Pixi Drawable asset
+ */
 Planet.prototype.addToDraw = function(obj){
     this.peripheralCircle.container.addChild(obj);
 };
 
+/**
+ * Creates circle with element as center
+ * @param  Object element PIXI Asset acting as center
+ */
 Planet.prototype.createCircle = function(element)
 {
     var center = element.position;
@@ -86,6 +111,11 @@ Planet.prototype.createCircle = function(element)
     return sprite;
 };
 
+/**
+ * Adds hover binding:
+ *     On hover, lighten planet, and its peripheral circle
+ * @param PixiObject element
+ */
 Planet.prototype.addBinds = function(element)
 {
     element.buttonMode = true;
@@ -108,6 +138,10 @@ Planet.prototype.addBinds = function(element)
     }
 }
 
+/**
+ * Creates arc with element as center
+ * @param  PixiObject element
+ */
 Planet.prototype.createArc = function(element) {
     var center = element.position;
     var circle = new PIXI.Graphics();
@@ -130,6 +164,11 @@ Planet.prototype.createArc = function(element) {
     return sprite;
 }
 
+/**
+ * Creates random sprite on the planet peripheral circle
+ * @param  Number scale
+ * @param  Number alpha
+ */
 Planet.prototype.createSprite = function(scale,alpha)
 {
     //Random point on circle.
