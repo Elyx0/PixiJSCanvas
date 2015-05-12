@@ -66,7 +66,9 @@ The app leverages PIXIjs WebGL Canvas and [GSAP TweenMax](https://greensock.com/
 
 Pixi Library was tweaked to achieve good circles.
 
-    `var segs =  Math.ceil(Math.abs(sweep) / (Math.PI * 2)) * 600;`
+```javascript
+var segs =  Math.ceil(Math.abs(sweep) / (Math.PI * 2)) * 600;
+```
 
 PIXIjs uses only a low segments number to draw an arc, which makes the converting into graphics looking weird (pixellised circle)
 Upping the segments variable allows to refine the shape to look like an actual circle.
