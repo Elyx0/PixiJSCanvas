@@ -8,6 +8,7 @@ Sample Query url: http://darwintrend.herokuapp.com/trends.json which auto geoloc
 
 A single trend item would look like:
 
+    ```json
     {
     _id: "5551cec2b61f8703000eb808",
     tag: "Lio",
@@ -37,6 +38,7 @@ A single trend item would look like:
     ],
     __v: 0
     }
+    ```
 
 The country code mapping can be found at : https://github.com/felginep/hawttrends/blob/master/HawtTrends/Controller/HTTermsDownloader.m
 
@@ -51,14 +53,20 @@ http://darwintrend.herokuapp.com/trends/1 or darwintrend.herokuapp.com/trends/US
 
 # Quick start
 
+For development:
+
     npm install
+    gulp
+
+Then run in another terminal
+
     node index.js
 
 The app leverages PIXIjs WebGL Canvas and [GSAP TweenMax](https://greensock.com/gsap).
 
 Pixi Library was tweaked to achieve good circles.
 
-    var segs =  Math.ceil(Math.abs(sweep) / (Math.PI * 2)) * 600;
+    `var segs =  Math.ceil(Math.abs(sweep) / (Math.PI * 2)) * 600;`
 
 PIXIjs uses only a low segments number to draw an arc, which makes the converting into graphics looking weird (pixellised circle)
 Upping the segments variable allows to refine the shape to look like an actual circle.
