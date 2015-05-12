@@ -5,7 +5,7 @@ Fetcher Status: [![Build Status](https://magnum.travis-ci.com/DarwinEcosystem/sp
 DarwinBanner puts in visual Trends by geoloc, by pulling the data from our fetcher:
 
 
-[![Gif](https://raw.githubusercontent.com/DarwinEcosystem/darwinbanner/master/demo.gif)]
+![Gif](https://raw.githubusercontent.com/DarwinEcosystem/darwinbanner/master/demo.gif)
 
 
 Sample Query url: http://darwintrend.herokuapp.com/trends.json which auto geolocates and serves trends keywords.
