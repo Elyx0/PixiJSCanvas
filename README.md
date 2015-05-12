@@ -42,7 +42,7 @@ __v: 0
 
 The country code mapping can be found at : https://github.com/felginep/hawttrends/blob/master/HawtTrends/Controller/HTTermsDownloader.m
 
-The app uses [Telize](www.telize.com) to locate your contry code, then uses it to query the trends for visualization,
+The app uses [Telize](www.telize.com) to locate your country code, then uses it to query the trends for visualization,
 
 You can request the trends for a specific country either by its country code number or abbreviation:
 
