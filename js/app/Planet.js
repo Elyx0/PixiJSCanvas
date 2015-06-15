@@ -71,7 +71,7 @@ Planet.prototype.update = function()
 Planet.prototype.createText = function(word,circle)
 {
     var px = this.peripheralCircle.tagInstance.text._style.font.split("px")[0] * 0.8;
-    if (px < 25) px = 25;
+    if (px < 23 || px > 27) px = 23;
     var text = new PIXI.Text(word, {font:"" + px + "px Lato", fill:"white"});
     text.resolution = window.devicePixelRatio;
     text.position.x = circle.position.x;// - text.getBounds().width/2;
