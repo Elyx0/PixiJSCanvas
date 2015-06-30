@@ -38,8 +38,8 @@ function Planet(options,peripheralCircle)
         this.container.addChild(miniPlanetText);
 
         //Setup bindings on hover
-        this.addBinds(miniPlanetArc);
-        this.addBinds(miniPlanetText);
+        this.addBinds(miniPlanetArc,options.name);
+        this.addBinds(miniPlanetText,options.name);
 
         this.addToDraw(this.container);
     }
@@ -116,7 +116,7 @@ Planet.prototype.createCircle = function(element)
  *     On hover, lighten planet, and its peripheral circle
  * @param PixiObject element
  */
-Planet.prototype.addBinds = function(element)
+Planet.prototype.addBinds = function(element,name)
 {
     element.buttonMode = true;
     element.interactive = true;
@@ -132,9 +132,14 @@ Planet.prototype.addBinds = function(element)
     }
     element.mouseout = function()
     {
-        console.log('mouseout');
+        //console.log('mouseout');
         TweenLite.to(arc,dur,{alpha:_prevAlpha});
         TweenLite.to(periphSprite,dur,{alpha:_prevPeriphecalAlpha});
+    }
+    var that = this;
+    element.mousedown = function()
+    {
+        window.open("https://www.google.com/search?q=" + name + "%20" + that.peripheralCircle.tagInstance.word, '_blank');
     }
 }
 
