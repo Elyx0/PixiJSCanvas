@@ -136,11 +136,10 @@ Planet.prototype.addBinds = function(element,name)
         TweenLite.to(arc,dur,{alpha:_prevAlpha});
         TweenLite.to(periphSprite,dur,{alpha:_prevPeriphecalAlpha});
     }
-    var that = this;
     element.mousedown = function()
     {
-        window.open("https://www.google.com/search?q=" + name + "%20" + that.peripheralCircle.tagInstance.word, '_blank');
-    }
+        window.open("https://www.google.com/search?q=" + name + "%20" + this.peripheralCircle.tagInstance.word, '_blank');
+    }.bind(this);
 }
 
 /**
